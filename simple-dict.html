@@ -13,32 +13,40 @@
 
             <form class="search">
                 <input type="text" name="word" placeholder="insert word" value="{{searchWord}}"/>
+                <div id="candidates">
                 {{#each candidates}}
                     {{> candidate}}
                 {{/each}}
+                </div>
             </form>
 
         </header>
 
-        <ul>
-            {{#each dicts}}
-                {{> dict}} 
-            {{else}}
-                <div class="alert alert-warning">There is no result.</div>
-            {{/each}}
-        </ul>
+        <div class="dicts-wrap">
 
-        {{#if searchWord}}
-        {{#if currentUser}}
-        <div class="add-dict">
-        <form class="add-dict">
-            <input type="hidden" name="word" value="{{searchWord}}" />
-            <textarea rows=3 cols=70 name="description" placeholder="add description to this word"></textarea>
-            <input type="submit" name="submit" value="Add Description" />
-        </form>
+            <ul id="dicts">
+                {{#each dicts}}
+                    {{> dict}} 
+                {{else}}
+                    <div class="alert alert-warning">There is no result.</div>
+                {{/each}}
+            </ul>
+
+            {{#if searchWord}}
+            {{#if currentUser}}
+            <div class="add-dict">
+            <form class="add-dict">
+                <input type="hidden" name="word" value="{{searchWord}}" />
+                <textarea rows=3 cols=70 name="description" placeholder="add description to this word"></textarea>
+                <input type="submit" name="submit" value="Add Description" />
+            </form>
+            </div>
+            {{else}}
+                <div class="alert alert-info">Please Sign-in to Add Words</div>
+            {{/if}}
+            {{/if}}
+
         </div>
-        {{/if}}
-        {{/if}}
 
     </div>
 </body>
@@ -57,6 +65,6 @@
 </template>
 
 <template name="candidate">
-    <div class="candidate">{{word}}</div>
+    <div><a href="#" class="candidate">{{word}}</a></div>
 </template>
 

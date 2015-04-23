@@ -15,9 +15,10 @@ if (Meteor.isClient) {
             console.log(Session.get("candidate"));
             if (Session.get("candidate")) {
                 var key = Session.get("candidate").toUpperCase();
-                console.log(key);
+                var regex = "^" + key;
+                console.log(regex);
                 return Dicts.find({
-                    key: key
+                    key: {$regex:regex}
                 }, {
                     sort: {
                         createdAt: -1
@@ -95,6 +96,17 @@ if (Meteor.isClient) {
             if (confirm("Do you really want to delete this?")) {
                 Meteor.call("deleteDict", this._id);
             }
+        }
+    });
+
+    // In the client code, below everything else
+    Template.candidate.events({
+        "click .candidate": function(event) {
+            console.log(event.target.text);
+            Session.set("searchWord", event.target.text);
+            Session.set("candidate", '');
+            // Prevent default form submit
+            return false;
         }
     });
 
