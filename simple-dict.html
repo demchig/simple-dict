@@ -1,0 +1,62 @@
+<!-- simple-dict.html -->
+<head>
+    <title>Simple Dictionary</title>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Dicts ({{allCount}})</h1>
+
+            {{> loginButtons}}
+
+            <form class="search">
+                <input type="text" name="word" placeholder="insert word" value="{{searchWord}}"/>
+                {{#each candidates}}
+                    {{> candidate}}
+                {{/each}}
+            </form>
+
+        </header>
+
+        <ul>
+            {{#each dicts}}
+                {{> dict}} 
+            {{else}}
+                <div class="alert alert-warning">There is no result.</div>
+            {{/each}}
+        </ul>
+
+        {{#if searchWord}}
+        {{#if currentUser}}
+        <div class="add-dict">
+        <form class="add-dict">
+            <input type="hidden" name="word" value="{{searchWord}}" />
+            <textarea rows=3 cols=70 name="description" placeholder="add description to this word"></textarea>
+            <input type="submit" name="submit" value="Add Description" />
+        </form>
+        </div>
+        {{/if}}
+        {{/if}}
+
+    </div>
+</body>
+
+<!-- replace the existing word template with this code -->
+<template name="dict">
+    <li class="">
+        <button class="delete">&times;</button>
+
+        <div class="text"><strong>{{word}}</strong></div>
+
+        <div class="text">{{description}}</div>
+
+        <div class="label label-default">created by <strong>{{username}}</strong></div>
+    </li>
+</template>
+
+<template name="candidate">
+    <div class="candidate">{{word}}</div>
+</template>
+
